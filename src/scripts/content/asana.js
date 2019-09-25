@@ -1,6 +1,6 @@
 'use strict';
 
-// New UI Board view v1 and v2
+// Old task view
 togglbutton.render(
   '.BoardColumnCardsContainer-item:not(.toggl)',
   { observe: true },
@@ -23,7 +23,30 @@ togglbutton.render(
   }
 );
 
-// New UI Board task detail view v2
+// New task view
+togglbutton.render('.MyTasksTaskRow:not(.toggl)', { observe: true },
+  function (elem) {
+    const container = elem.querySelector('.ItemRowTwoColumnStructure-left');
+    const description = elem.querySelector('.TaskName textarea').textContent;
+
+    const projectSelector = () => {
+      const projectElement = elem.querySelector('.TaskRow-pots .Pill');
+
+      return projectElement ? projectElement.textContent : '';
+    };
+
+    const link = togglbutton.createTimerLink({
+      className: 'asana-new-ui',
+      description: description,
+      projectName: projectSelector,
+      buttonType: 'minimal'
+    });
+
+    container.appendChild(link);
+  }
+);
+
+// Old and Beta UI - detail view
 togglbutton.render(
   '.SingleTaskPane-titleRow:not(.toggl)',
   { observe: true },
